@@ -8,9 +8,11 @@
     <body>
         <h1>Le chiffre</h1>
         <?php 
-        $result =  reverseString("kayak");
-
+        $result =  reverseString("Bonjour");
         echo $result;
+
+        $palin = isPalindrome("kayak");
+        echo $palin
         ?>
 
        
