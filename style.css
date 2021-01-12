@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+    width: auto;
+}
+
+.white, .black {
+    height: 45px;
+    width: 45px;
+}
+
+.black {
+    background-color: black;
+}
