@@ -23,7 +23,17 @@
             ?>
         </div>
         <?php 
-            print_r(gRandomTab(20));
+            $tab = gRandomTab(10);
+            echo "Le tableau :";
+            print_r($tab);
+            echo '<br>';
+            echo "Le tableau ordre croissant:";
+            echo '<br>';
+            print_r(sortArray($tab, 1));
+            echo '<br>';
+            echo "Le tableau ordre décroissant:";
+            echo '<br>';
+            print_r(sortArray($tab, 2));
         ?>
     </body>
 </html>

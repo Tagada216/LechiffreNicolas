@@ -66,11 +66,34 @@ function gRandomTab($size){
 
     $randomTab = array();
     for($i=0; $i<$size; $i++){
-        array_push($randomTab, rand(0,50));
+        array_push($randomTab, rand(0,100));
     }
     return $randomTab;
 }
 
+function sortArray($tab, $choice){
 
+    switch ($choice) {
+        case 1:
+            sort($tab);
+
+            $arrlength = count($tab);
+            for($x = 0; $x < $arrlength; $x++) {
+                echo $tab[$x];
+                echo "<br>";
+            }
+            break;
+        case 2:
+            rsort($tab);
+            $arrlength = count($tab);
+            for($x = 0; $x < $arrlength; $x++) {
+                echo $tab[$x];
+                echo "<br>";
+            }
+            break;
+
+    }
+
+}
 
 ?>
