@@ -34,6 +34,12 @@
             echo "Le tableau ordre décroissant:";
             echo '<br>';
             print_r(sortArray($tab, 2));
+
+            $Dtab = gDRandomTab();
+            echo "Le tableau deux dimensions : ";
+            echo '<br>';
+           // var_dump($Dtab);
+            print_r(displayTab($Dtab))
         ?>
     </body>
 </html>

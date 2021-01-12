@@ -71,6 +71,31 @@ function gRandomTab($size){
     return $randomTab;
 }
 
+function gDRandomTab(){
+
+    $randomTab = array();
+    $tab = array();
+
+    for($i=0; $i<6; $i++){
+        for($j=0; $j<6; $j++){
+            array_push($tab, rand(0,100));
+        }
+        array_push($randomTab, $tab);
+    }
+    return $randomTab;
+}
+
+function displayTab($tab){
+
+    for($i=0 ; $i<6; $i++) {  //for row 0 to 5 
+        for($j=0;$j<6;$j++) {    //for column 0 to 5  
+            echo $tab[$i][$j]," " ; 
+        } 
+            echo "<br>" ; 
+   } 
+
+}
+
 function sortArray($tab, $choice){
 
     switch ($choice) {
