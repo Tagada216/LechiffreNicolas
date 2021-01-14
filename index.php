@@ -13,7 +13,9 @@
         <a href="morpionHome.php">
             <button type="button" class="btn btn-success" > Jouer au Morpion</button>
         </a>
-        
+        <a href="login.php">
+            <button type="button" class="btn btn-success" > Se connecter</button>
+        </a>
         
         <?php 
         echo '<br>';

@@ -25,7 +25,7 @@
         <label><label for="link">Lien de la salle (à donner au joueur 2)</label></label>
             <?php
                 $randomLink = getRandomLink();
-                echo ' <input id="link" type="text" name="roomlink" value= '.$randomLink  ; 
+                    echo ' <input id="link" type="text" name="roomlink" value= '.$randomLink  ; 
             ?>
         
     </div>

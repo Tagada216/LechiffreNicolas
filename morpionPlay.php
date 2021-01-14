@@ -1,12 +1,51 @@
 <?php
 session_start();
-if (empty($_SESSION['wichplayer'])) {
+$gameFile = "gamedata.json";
+$arr_data = array();
+
+try {
+
+$formdata = array( 
+    'gameStart'=> true,
+    'roomlink'=>$_POST['roomlink'],
+    'auJoueur' => 1,
+    'grille' => array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+);
+
+// Get Data 
+$jsondata = file_get_contents($gameFile);
+$arr_data = json_decode($jsondata, true);
+var_dump($arr_data);
+var_dump( $arr_data->{"roomlink"});
+
+// // Push Form data in tab
+// array_push($arr_data, $formdata);
+
+// $jsondata = json_encode($arr_data, JSON_PRETTY_PRINT);
+
+// 	   //write json data into data.json file
+// 	   if(file_put_contents($gameFile, $jsondata)) {
+//         echo 'Data successfully saved';
+//     }
+//    else 
+//         echo "error";
+}
+catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+if( ($_SESSION['roomLink'] != $_POST['roomlink'] )) {
     $_SESSION['wichplayer'] = $_POST['player'];
     $_SESSION['roomLink'] = $_POST['roomlink'];
     $_SESSION['scoreJ1'] = 0;
     $_SESSION['scoreJ2'] = 0;
     $_SESSION['auJoueur'] = 1;
     $_SESSION['grille'] = array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+}
+if(($_SESSION['wichplayer']== "Joueur 1")&& (!empty($_SESSION['roomlink'])) ){
+
+echo "<script>alert(\"Joueur 1 déjà sélectionné\")</script>";
+
 }
 ?>
 <!DOCTYPE HTML>

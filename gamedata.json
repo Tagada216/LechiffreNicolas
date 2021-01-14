@@ -1,0 +1,18 @@
+[
+    {
+        "gameStart": true,
+        "roomlink": "saEU",
+        "auJoueur": 1,
+        "grille": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    }
+]
