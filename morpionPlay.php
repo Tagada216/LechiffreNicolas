@@ -1,98 +1,59 @@
 <?php
 session_start();
-$gameFile = "gamedata.json";
-$arr_data = array();
+require_once('./class/gameData.php');
+require("functions.php"); 
 
-try {
-
-$formdata = array( 
-    'gameStart'=> true,
-    'roomlink'=>$_POST['roomlink'],
-    'auJoueur' => 1,
-    'grille' => array(0, 0, 0, 0, 0, 0, 0, 0, 0)
-);
-
-// Get Data 
-$jsondata = file_get_contents($gameFile);
-$arr_data = json_decode($jsondata, true);
-var_dump($arr_data);
-var_dump( $arr_data->{"roomlink"});
-
-// // Push Form data in tab
-// array_push($arr_data, $formdata);
-
-// $jsondata = json_encode($arr_data, JSON_PRETTY_PRINT);
-
-// 	   //write json data into data.json file
-// 	   if(file_put_contents($gameFile, $jsondata)) {
-//         echo 'Data successfully saved';
-//     }
-//    else 
-//         echo "error";
-}
-catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
+if(!empty($_POST['roomlink'])){
+$room = $_POST['roomlink'];
+$player = $_POST['player'];
+saveSession($room, $player);
 }
 
-if( ($_SESSION['roomLink'] != $_POST['roomlink'] )) {
-    $_SESSION['wichplayer'] = $_POST['player'];
-    $_SESSION['roomLink'] = $_POST['roomlink'];
-    $_SESSION['scoreJ1'] = 0;
-    $_SESSION['scoreJ2'] = 0;
-    $_SESSION['auJoueur'] = 1;
-    $_SESSION['grille'] = array(0, 0, 0, 0, 0, 0, 0, 0, 0);
-}
-if(($_SESSION['wichplayer']== "Joueur 1")&& (!empty($_SESSION['roomlink'])) ){
 
-echo "<script>alert(\"Joueur 1 déjà sélectionné\")</script>";
-
-}
 ?>
 <!DOCTYPE HTML>
 <html>
 
 <head>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Découverte PHP</title>
     <meta charset="utf-8">
-    <?php require("Morpionfunctions.php"); ?>
 </head>
 
 <body>
-    <?php
-
-    // On récupère la valeur de GET si ce n'est pas vide
-    if ( (!empty($_GET['case']))  AND ($_GET['case']!= "reset") ){
-        // On récupère la case jouée et on la décrémente pour que cela corresponde avec notre tableau (array). Il ne faut pas oublier que les array commencent leur valeur à 0.
-        $leJoueurJoueLaCase = $_GET['case'] - 1;
-        // On test si la case est égale à 0
-        if ($_SESSION['grille'][$leJoueurJoueLaCase] == 0) {
-            // la case est libre, on peut y placer le pion
-            $_SESSION['grille'][$leJoueurJoueLaCase] = $_SESSION['auJoueur'];
+<div class=container>
+        <div class="d-flex justify-content-center">
+            <div class="p-2">
+                <?php echo " <h2> Vous êtes dans la salle de jeux : <b> ".$_SESSION['room_link'] ."</b> </h2>"?>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="p-2">
+                <?php echo " <h4>Vous êtes le : Joueur ".$_SESSION['player'] ."</h4>"?>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="p-2">
+                <?php $auJoueur = getauJoueur();
+                echo " <h4>C'est au tour du Joueur ".$auJoueur ."</h4>" 
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php $grid = getGrid();
+        if($_GET['case']){
+            if($auJoueur == 1){
+                $grid = array(1, 0, 0, 0, 0, 0, 0, 0, 0);
+            }elseif($auJoueur == 2){
+                $grid = array(2, 0, 0, 0, 0, 0, 0, 0, 0);
+            }
         }
-
-    }
-    //Reset Part 
-    if ((!empty($_GET['case']))  AND ($_GET['case'] == "reset")) {
-        resetGame();
-    }
-
-    //Game Data 
-    echo '<div class="container">';
-        echo '<div class="d-flex justify-content-center">';
-            echo '<div class="p-2">';
-                echo "<br><h2> Vous êtes dans la salle : <b>" . $_SESSION['roomLink'] . "</b></h2> <br>";
-                echo " <h3>Vous êtes le : <b>" . $_SESSION['wichplayer'] . "</b></h3> <br>";
-                echo " <h4>C'est le tour du <b> Joueur " . $_SESSION['auJoueur'] . "</b></h4> <br>";
-            echo "</div>";
-        echo "</div>";
-    echo "</div>";
     ?>
-
     <div class="game-board">
-        <a href="?case=1#" class="box"> <?php if ($_SESSION['grille'][0] == 1) echo '<img src="img/cross.png" alt="Croix" >';
-                                        elseif ($_SESSION['grille'][0] == 2) echo '<img src="img/circle.png" alt="Circle">';
+        <a case="1"href="?case=1#" class="box"> <?php if ($auJoueur == 1 && $grid[0]==1) echo '<img src="img/cross.png" alt="Croix" >';
+                                        elseif ($auJoueur == 2 && $grid[0]==2) echo '<img src="img/circle.png" alt="Circle">';
                                         else echo " "; ?></a>
         <a class="box" href="?case=2#"> <?php if ($_SESSION['grille'][1] == 1) echo '<img src="img/cross.png" alt="Croix">';
                                         elseif ($_SESSION['grille'][1] == 2) echo '<img src="img/circle.png" alt="Circle">';
@@ -119,7 +80,7 @@ echo "<script>alert(\"Joueur 1 déjà sélectionné\")</script>";
                                         elseif ($_SESSION['grille'][8] == 2) echo '<img src="img/circle.png" alt="Circle">';
                                         else echo " "; ?></a>
     </div>
-
+ 
     <div class=container>
         <div class="d-flex justify-content-center">
             <div class="p-2">

@@ -44,4 +44,13 @@
   align-items: center;
 }
 
+.clickPlay{
+  background-color: #34495E;
+  color:#34495E;
+  cursor: pointer;
+			text-indent: -99999px;
+			border: none;
+			width: 41px;
+			height: 42px;
+}
 
